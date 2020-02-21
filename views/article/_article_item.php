@@ -8,7 +8,9 @@
         <p class="text-muted text-right">
         <small>
             Created at: <b><?php echo Yii::$app->formatter->asRelativeTime($model->created_at) ?></b>
-            By: <b><?php echo $model->createdBy->username ?></b>
+            By: <b><?php echo $model->createdBy->username ?></b><br>
+            Updated at: <b><?php echo Yii::$app->formatter->asRelativeTime($model->updated_at) ?></b>
+            <!-- By: <b><?php echo $model->updatedBy->username ?></b> -->
         </small>
     </p>
     </div>
