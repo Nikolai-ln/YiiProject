@@ -9,7 +9,9 @@
         <small>
             Created at: <b><?php echo Yii::$app->formatter->asRelativeTime($model->created_at) ?></b>
             By: <b><?php echo $model->createdBy->username ?></b><br>
+            <?php if($model->created_at != $model->updated_at): ?>
             Updated at: <b><?php echo Yii::$app->formatter->asRelativeTime($model->updated_at) ?></b>
+            <?php endif; ?>
             <!-- By: <b><?php echo $model->updatedBy->username ?></b> -->
         </small>
     </p>
