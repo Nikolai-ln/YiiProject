@@ -44,6 +44,16 @@ class City extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getCities()
+    {
+        return $this->hasMany(City::className(), ['city_id' => 'city_id'])->inverseOf('city');
+    }
+
+    public function getCityName()
+    {
+        return $this->name;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
