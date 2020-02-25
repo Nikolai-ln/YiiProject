@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\City;
+use yii\filters\AccessControl;
 use app\models\CitySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,6 +21,17 @@ class CityController extends Controller
     public function behaviors()
     {
         return [
+            [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                    [
+                    'actions' => ['create', 'update', 'delete'],
+                    'allow' => true,
+                    'roles' => ['@']
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

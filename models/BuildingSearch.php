@@ -18,7 +18,7 @@ class BuildingSearch extends Building
     {
         return [
             [['building_id'], 'integer'],
-            [['name', 'city_id'], 'safe'], //we add city_id here to search by letters
+            [['name', 'city_id'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class BuildingSearch extends Building
             //'city_id' => $this->city_id, //we comment this
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'building.name', $this->name])
                 ->andFilterWhere(['like', 'city.name', $this->city_id]);
 
         return $dataProvider;

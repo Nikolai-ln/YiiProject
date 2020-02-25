@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Building;
+use yii\filters\AccessControl;
 use app\models\BuildingSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,7 +20,18 @@ class BuildingController extends Controller
      */
     public function behaviors()
     {
-        return [
+        return [ //these rows add permissions to the user if he is able to access the following pages
+            [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                    [
+                    'actions' => ['create', 'update', 'delete'],
+                    'allow' => true,
+                    'roles' => ['@']
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

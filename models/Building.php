@@ -44,7 +44,7 @@ class Building extends \yii\db\ActiveRecord
         return [
             'building_id' => 'Building ID',
             'name' => 'Name',
-            'city_id' => 'City ID',
+            'city_id' => 'City', //we change the label, it is visible in create and update pages
         ];
     }
 

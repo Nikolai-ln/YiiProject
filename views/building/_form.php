@@ -17,8 +17,8 @@ use app\models\City;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <!-- <?= $form->field($model, 'city_id')->textInput() ?> -->
-    <?= $form->field($model, 'city')->dropDownList(ArrayHelper::map(City::find()->select(['name', 'city_id'])->all(), 'city_id', 'cityName'),['class' => 'form-control inline-block']); ?>
-
+    <?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(City::find()->select(['name', 'city_id'])->all(), 'city_id', 'cityName'),['class' => 'form-control inline-block']); ?>
+    <!-- we use city_id to access that field in the model, we have to change that label to City in Building.php -->
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

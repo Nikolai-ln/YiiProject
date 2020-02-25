@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php if(!Yii::$app->user->isGuest): ?>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->building_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->building_id], [
@@ -26,17 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <?php endif; ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'building_id',
             'name',
             //'city_id',
+            //'city.name',
             [
                 'label' => 'City',
                 'attribute' => 'city.name',
-                ],
-        ],
+                //'value' => $model->city->name,
+            ],
+         ],
     ]) ?>
 
 </div>
