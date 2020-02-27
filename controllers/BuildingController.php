@@ -9,6 +9,7 @@ use app\models\BuildingSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * BuildingController implements the CRUD actions for Building model.
@@ -47,8 +48,31 @@ class BuildingController extends Controller
      */
     public function actionIndex()
     {
+
+        $request = Yii::$app->request;
+        $getParams = $request->get();
+
         $searchModel = new BuildingSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $hasParams = $searchModel->load($getParams);
+
+        $query = Building::find();
+
+        // if(!empty($searchModel->city_id)) { //example
+        //     $query->andFilterWhere(['city_id' => $searchModel->city_id]);
+        // }
+        // if (!empty($searchModel->name)) {
+        //     $query->andFi
+        // }
+
+        if($hasParams) {
+            $query->andFilterWhere(['city_id' => $searchModel->city_id]);
+            $query->andFilterWhere(['like', 'name', $searchModel->name]);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

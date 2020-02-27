@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\BuildingSearch */
@@ -35,7 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //     'attribute'=>'city_id',
             //     'value'=>'city.name',
             //     ],
-            ['label'=>'City', 'attribute'=>'city_id', 'value'=>'city.name'], //we use city function in Building.php, city is property of function getCity
+            [
+                'attribute'=>'city_id',
+                'value' => 'city.name',
+                //'filter'=>ArrayHelper::map(\app\models\City::find()->asArray()->orderBy(['name' => SORT_ASC])->all(), 'city_id', 'name'),
+                'filter' => Html::activeDropDownList($searchModel, 'city_id', ArrayHelper::map(\app\models\City::find()->asArray()->orderBy(['name' => SORT_ASC])
+                                    ->all(), 'city_id', 'name'),['class'=>'form-control','prompt' => '-- Select City --']),
+            ],
+            //['label'=>'City', 'attribute'=>'city_id', 'value'=>'city.name'], //we use city function in Building.php, city is property of function getCity
             //['label'=>'City', 'value'=>function ($model, $index, $widget) { return $model->city->name; }],
             //'city_id',
 

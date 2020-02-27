@@ -102,7 +102,7 @@ class ArticleController extends Controller
         if ($model->created_by !== Yii::$app->user->id){
             throw new ForbiddenHttpException("You do not have permission to edit this article");
         }
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'slug' => $model->slug]);
         }

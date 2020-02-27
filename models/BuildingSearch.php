@@ -63,7 +63,8 @@ class BuildingSearch extends Building
         ]);
 
         $query->andFilterWhere(['like', 'building.name', $this->name])
-                ->andFilterWhere(['like', 'city.name', $this->city_id]);
+                ->andFilterWhere(['city_id' => $this->city_id]); // this works with dropdown filter
+                //->andFilterWhere(['like', 'city.name', $this->city_id]); // this works with search filter
 
         return $dataProvider;
     }

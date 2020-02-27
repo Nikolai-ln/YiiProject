@@ -40,7 +40,7 @@ class CitySearch extends City
      */
     public function search($params)
     {
-        $query = City::find();
+        $query = City::find()->orderBy(['name' => SORT_ASC]);
 
         // add conditions that should always apply here
 
