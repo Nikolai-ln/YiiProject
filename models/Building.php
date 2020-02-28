@@ -18,6 +18,7 @@ class Building extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public $file;
     public static function tableName()
     {
         return 'building';
@@ -31,7 +32,10 @@ class Building extends \yii\db\ActiveRecord
         return [
             [['name', 'city_id'], 'required'],
             [['city_id'], 'integer'],
+            // [['file'], 'file'],
             [['name'], 'string', 'max' => 55],
+            [['photo'], 'string', 'max' => 1024],
+            // [['file'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'city_id']],
         ];
     }
@@ -45,6 +49,7 @@ class Building extends \yii\db\ActiveRecord
             'building_id' => 'Building ID',
             'name' => 'Name',
             'city_id' => 'City', //we change the label, it is visible in create and update pages
+            'file' => 'Photo',
         ];
     }
 

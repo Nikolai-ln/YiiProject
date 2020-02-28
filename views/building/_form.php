@@ -12,17 +12,22 @@ use app\models\City;
 
 <div class="building-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <!-- <?= $form->field($model, 'city_id')->textInput() ?> -->
     <?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(City::find()->select(['name', 'city_id'])->all(), 'city_id', 'cityName'),['class' => 'form-control inline-block']); ?>
     <!-- we use city_id to access that field in the model, we have to change that label to City in Building.php -->
+    <?= $form->field($model, 'file')->fileInput() ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <?php if(isset($errorMessage)): ?>
+        <span style="color:red;"><?= $errorMessage ?></span>
+    <?php endif; ?>
 
 </div>

@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\web\UploadedFile;
 
 /**
  * BuildingController implements the CRUD actions for Building model.
@@ -100,14 +101,70 @@ class BuildingController extends Controller
      */
     public function actionCreate()
     {
+        $request = Yii::$app->request;
         $model = new Building();
+        $fileSuccess = NULL;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->building_id]);
+        if ($request->isPost) {
+            
+            $modelLoaded = $model->load($request->post());
+
+            if (!$modelLoaded) {
+                return $this->render('create', [
+                    'model' => $model,
+                    'errorMessage' => "Missing parameters!",
+                ]);
+            }
+            // get the instance of the uploaded file
+            $file = UploadedFile::getInstance($model, 'file');
+
+            // if (!$file) {
+            //     return $this->render('create', [
+            //         'model' => $model,
+            //         'errorMessage' => "File not selected!",
+            //     ]);
+            // }
+
+            if($file){
+                $photoPath = "Uploads/".$model->name."-".$file->name;
+                $fileSuccess = $file->saveAs($photoPath);
+            }
+
+            if ($file && !$fileSuccess) {
+                return $this->render('create', [
+                    'model' => $model,
+                    'errorMessage' => "Cannot write file to disk!",
+                ]);
+            }
+
+            if ($file && $fileSuccess){
+                // save the path in the db column
+                $model->setAttribute('photo', $photoPath);
+            }
+
+            if ($model->validate() && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->building_id]);
+            }
+
+
+        // if ($model->load(Yii::$app->request->post())) {
+            
+        //Yii::$app->params['uploadPath'] = Yii::getAlias("@web") . '/Uploads/';
+        //$imageName = Yii::$app->security->generateRandomString()."{$model->name}";
+
+        // get the instance of the uploaded file
+        // $imageName = $model->name;
+        // $model->file = UploadedFile::getInstance($model, 'file'); // model and attribute name
+        // $model->file->saveAs('Uploads/'.$imageName.'.'.$model->file->extension);
+        // save the path in the db column
+        // $model->photo = 'Uploads/'.$imageName.'.'.$model->file->extension;
+
+        // return $this->redirect(['view', 'id' => $model->building_id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'errorMessage' => NULL,
         ]);
     }
 
@@ -121,9 +178,45 @@ class BuildingController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $request = Yii::$app->request;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->building_id]);
+        if ($request->isPost) {
+            
+            $modelLoaded = $model->load($request->post());
+
+            if (!$modelLoaded) {
+                return $this->render('update', [
+                    'model' => $model,
+                    'errorMessage' => "Missing parameters!",
+                ]);
+            }
+            // get the instance of the uploaded file
+            $file = UploadedFile::getInstance($model, 'file');
+
+            // if (!$file) {
+            //     return $this->render('update', [
+            //         'model' => $model,
+            //         'errorMessage' => "File not selected!",
+            //     ]);
+            // }
+
+            if($file){
+                $photoPath = "Uploads/".$model->name."-".$file->name;
+                $fileSuccess = $file->saveAs($photoPath);
+            }
+
+            if (!$fileSuccess) {
+                return $this->render('update', [
+                    'model' => $model,
+                    'errorMessage' => "Cannot update file to disk!",
+                ]);
+            }
+            // save the path in the db column
+            $model->setAttribute('photo', $photoPath);
+
+            if ($fileSuccess && $model->validate() && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->building_id]);
+            }
         }
 
         return $this->render('update', [

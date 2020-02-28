@@ -43,11 +43,18 @@ AppAsset::register($this);
             ['label' => 'All Articles', 'url' => ['/article']],
             ['label' => 'Cities', 'url' => ['/city']],
             ['label' => 'Buildings', 'url' => ['/building']],
+            // [
+            //     'label' => 'Buildings',
+            //     'active' => in_array(Yii::$app->controller->id, ['building']),
+            //     'items' => [
+            //       ['label' => 'List Buildings',  'url' => ['/building/index']],
+            //     ]
+            // ],
             Yii::$app->user->isGuest ? "" : (
             ['label' => 'Article', 'url' => ['/site/article']]
             ),
             ['label' => 'Article2', 'url' => ['/site/article2']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

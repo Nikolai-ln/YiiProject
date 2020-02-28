@@ -40,6 +40,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'city.name',
                 //'value' => $model->city->name,
             ],
+            [
+                'label' => 'Photo',
+                'attribute' => 'photo',
+                'format' => 'html',
+                'value' => function($item) {
+                    if(!$item){
+                        return NULL;  
+                    }
+                    $path = Yii::getAlias('@web');
+                    $tag = '<img src="'. $path . '/' . $item->photo. '" />';
+                    return $tag;
+                }
+            ]
          ],
     ]) ?>
 
