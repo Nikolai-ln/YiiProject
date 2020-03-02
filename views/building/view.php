@@ -45,12 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'photo',
                 'format' => 'html',
                 'value' => function($item) {
-                    if(!$item){
-                        return NULL;  
+                    if($item->photo) {
+                        $path = Yii::getAlias('@web');
+                        $tag = '<img src="'. $path . '/' . $item->photo. '" />';
+                        return $tag;
                     }
-                    $path = Yii::getAlias('@web');
-                    $tag = '<img src="'. $path . '/' . $item->photo. '" />';
-                    return $tag;
+                    else
+                        return NULL;
                 }
             ]
          ],

@@ -10,6 +10,7 @@ use Yii;
  * @property int $building_id
  * @property string $name
  * @property int $city_id
+ * @property string $photo
  *
  * @property City $city
  */
@@ -18,7 +19,7 @@ class Building extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public $file;
+    public $file; // we use it in _form.php file
     public static function tableName()
     {
         return 'building';
@@ -59,5 +60,19 @@ class Building extends \yii\db\ActiveRecord
     public function getCity()
     {
         return $this->hasOne(City::className(), ['city_id' => 'city_id']);
+    }
+
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        // ...custom code here...
+        if($this->photo){
+            $photoPathOld = Yii::$app->basePath.'/web/'.$this->photo; //get the path to the existing file
+            @unlink($photoPathOld);
+        }
+        return true;
     }
 }

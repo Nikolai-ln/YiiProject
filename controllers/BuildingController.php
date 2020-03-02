@@ -179,42 +179,50 @@ class BuildingController extends Controller
     {
         $model = $this->findModel($id);
         $request = Yii::$app->request;
+        $fileSuccess = NULL;
+        $photoPathOld = NULL;
 
         if ($request->isPost) {
             
             $modelLoaded = $model->load($request->post());
 
+            if($model->photo){
+                $photoPathOld = Yii::$app->basePath.'/web/'.$model->photo; //get the path to the existing file
+            }
+            
             if (!$modelLoaded) {
                 return $this->render('update', [
                     'model' => $model,
                     'errorMessage' => "Missing parameters!",
                 ]);
             }
+            
             // get the instance of the uploaded file
             $file = UploadedFile::getInstance($model, 'file');
-
-            // if (!$file) {
-            //     return $this->render('update', [
-            //         'model' => $model,
-            //         'errorMessage' => "File not selected!",
-            //     ]);
-            // }
 
             if($file){
                 $photoPath = "Uploads/".$model->name."-".$file->name;
                 $fileSuccess = $file->saveAs($photoPath);
+                if(file_exists($photoPathOld)){
+                    if(strcmp($photoPath, $photoPathOld) !== 0){
+                        @unlink($photoPathOld);
+                    }
+                }
             }
 
-            if (!$fileSuccess) {
+            if ($file && !$fileSuccess) {
                 return $this->render('update', [
                     'model' => $model,
                     'errorMessage' => "Cannot update file to disk!",
                 ]);
             }
-            // save the path in the db column
-            $model->setAttribute('photo', $photoPath);
 
-            if ($fileSuccess && $model->validate() && $model->save()) {
+            if ($file && $fileSuccess){
+                // save the path in the db column
+                $model->setAttribute('photo', $photoPath);
+            }
+
+            if ($model->validate() && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->building_id]);
             }
         }
