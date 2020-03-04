@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($item) {
                     if($item->photo) {
                         $path = Yii::getAlias('@web');
-                        $tag = '<img src="'. $path . '/' . $item->photo. '" />';
+                        $tag = '<img src="'. $path . '/' . $item->photo. '" style="max-width:1000px" />';
                         return $tag;
                     }
                     else
