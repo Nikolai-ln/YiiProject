@@ -1,24 +1,24 @@
 <?php
 
 use yii\helpers\Html;
+use app\models\City;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Building */
+/* @var $model app\models\CityPhoto */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Buildings', 'url' => ['index']];
+?> <h1> <?php $this->title = $model->city->name; ?> </h1> <?php
+$this->params['breadcrumbs'][] = ['label' => 'City Photos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="building-view">
+<div class="city-photo-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if(!Yii::$app->user->isGuest): ?>
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->building_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->building_id], [
+        <?= Html::a('Update', ['update', 'id' => $model->city_photo_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->city_photo_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -27,22 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?php endif; ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'building_id',
-            'name',
+            //'city_photo_id',
             //'city_id',
-            //'city.name',
             [
                 'label' => 'City',
                 'attribute' => 'city.name',
-                //'value' => $model->city->name,
             ],
             [
-                'label' => 'Photo',
-                'attribute' => 'photo',
+                'label' => 'Photos',
+                'attribute' => 'files',
                 'format' => 'html',
                 'value' => function($item) {
                     if($item->photo) {
@@ -54,7 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return NULL;
                 }
             ]
-         ],
+            //'photo',
+        ],
     ]) ?>
 
 </div>
