@@ -71,7 +71,7 @@ class CityPhotoController extends Controller
 
         $files = UploadedFile::getInstances($model, 'files');
 
-        if($files){
+        if($files) {
             foreach ($files as $file) {
                 $model = new CityPhoto();
             
@@ -96,7 +96,7 @@ class CityPhotoController extends Controller
                             'errorMessage' => "Cannot write file to disk!",
                         ]);
                     }
-                    if ($file && $fileSuccess){
+                    if ($file && $fileSuccess) {
                         $model->setAttribute('photo', $photoPath);
                         $model->save();
                     }
