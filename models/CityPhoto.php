@@ -40,6 +40,7 @@ class CityPhoto extends \yii\db\ActiveRecord
             [['description'], 'string', 'max' => 5000],
             [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 10],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'city_id']],
+            [['uploaded_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['uploaded_by' => 'user_id']],
         ];
     }
 
@@ -65,8 +66,21 @@ class CityPhoto extends \yii\db\ActiveRecord
         return $this->hasOne(City::className(), ['city_id' => 'city_id']);
     }
 
-    public function getUser()
+    public function getUploadedBy()
     {
         return $this->hasOne(User::className(), ['user_id' => 'uploaded_by']);
+    }
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        // ...custom code here...
+        if($this->photo){
+            $photoPathOld = Yii::$app->basePath.'/web/'.$this->photo; //get the path to the existing file
+            @unlink($photoPathOld);
+        }
+        return true;
     }
 }

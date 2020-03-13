@@ -42,6 +42,7 @@ AppAsset::register($this);
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'All Articles', 'url' => ['/article']],
             ['label' => 'Cities', 'url' => ['/city']],
+            ['label' => 'Photos', 'url' => ['/city-photo']],
             ['label' => 'Buildings', 'url' => ['/building']],
             // [
             //     'label' => 'Buildings',

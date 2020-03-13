@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\CityPhoto;
+use yii\filters\AccessControl;
 use app\models\CityPhotoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,6 +22,17 @@ class CityPhotoController extends Controller
     public function behaviors()
     {
         return [
+            [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                    [
+                    'actions' => ['create', 'update', 'delete'],
+                    'allow' => true,
+                    'roles' => ['@']
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -88,7 +100,7 @@ class CityPhotoController extends Controller
                     }
                     
                     //$conn = mysqli_connect("127.0.0.53","root", "", "dbtest");
-                    $photoPath = 'Uploads/' . $file->name . '---' . Yii::$app->security->generateRandomString();
+                    $photoPath = 'Uploads/' . $file->name . '---' . $model->city->name;//Yii::$app->security->generateRandomString();
                     $fileSuccess = $file->saveAs($photoPath);
                     if ($file && !$fileSuccess) {
                         return $this->render('create', [
@@ -124,9 +136,55 @@ class CityPhotoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $request = Yii::$app->request;
+        $fileSuccess = NULL;
+        $photoPathOld = NULL;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->city_photo_id]);
+        if ($request->isPost) {
+
+            $modelLoaded = $model->load($request->post());
+
+            if($model->photo){
+                $photoPathOld = Yii::$app->basePath.'/web/'.$model->photo; //get the path to the existing file
+            }
+
+            if (!$modelLoaded) {
+                return $this->render('update', [
+                    'model' => $model,
+                    'errorMessage' => "Missing parameters!",
+                ]);
+            }
+
+            $files = UploadedFile::getInstances($model, 'files');
+
+            if($files){
+                foreach ($files as $file) {
+                    $photoPath = 'Uploads/' . $file->name . '---' . $model->city->name;
+                    $fileSuccess = $file->saveAs($photoPath);
+                    if(file_exists($photoPathOld)){
+                        if(strcmp($photoPath, $photoPathOld) !== 0){
+                            @unlink($photoPathOld);
+                        }
+                    }
+                }
+            }
+
+            if ($files && !$fileSuccess) {
+                return $this->render('update', [
+                    'model' => $model,
+                    'errorMessage' => "Cannot update file to disk!",
+                ]);
+            }
+
+            if ($files && $fileSuccess){
+                // save the path in the db column
+                $model->setAttribute('photo', $photoPath);
+                $model->save();
+            }
+
+            if ($model->validate()) {
+                return $this->redirect(['view', 'id' => $model->city_photo_id]);
+            }
         }
 
         return $this->render('update', [
