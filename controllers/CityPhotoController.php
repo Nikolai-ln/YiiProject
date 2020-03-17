@@ -79,6 +79,7 @@ class CityPhotoController extends Controller
     {
         $request = Yii::$app->request;
         $model = new CityPhoto();
+        $model->scenario = 'create';
         $fileSuccess = NULL;
 
         $files = UploadedFile::getInstances($model, 'files');
@@ -136,6 +137,7 @@ class CityPhotoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = 'update';
         $request = Yii::$app->request;
         $fileSuccess = NULL;
         $photoPathOld = NULL;

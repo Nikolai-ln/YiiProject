@@ -38,7 +38,8 @@ class CityPhoto extends \yii\db\ActiveRecord
             [['city_id', 'uploaded_by'], 'integer'],
             [['photo'], 'string', 'max' => 1024],
             [['description'], 'string', 'max' => 5000],
-            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 10],
+            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 10, 'on' => 'create'],
+            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 1, 'on' => 'update'],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'city_id']],
             [['uploaded_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['uploaded_by' => 'user_id']],
         ];
