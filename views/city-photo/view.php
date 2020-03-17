@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'city.name',
             ],
             [
-                'label' => 'Photos',
+                'label' => 'Photo',
                 'attribute' => 'files',
                 'format' => 'html',
                 'value' => function($item) {

@@ -181,10 +181,9 @@ class CityPhotoController extends Controller
             if ($files && $fileSuccess){
                 // save the path in the db column
                 $model->setAttribute('photo', $photoPath);
-                $model->save();
             }
 
-            if ($model->validate()) {
+            if ($model->validate() && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->city_photo_id]);
             }
         }

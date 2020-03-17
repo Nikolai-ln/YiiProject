@@ -53,7 +53,7 @@ class CityPhoto extends \yii\db\ActiveRecord
         return [
             'city_photo_id' => 'City Photo ID',
             'city_id' => 'City',
-            'files' => 'Photos',
+            'files' => 'Photo(s)',
             'uploaded_by' => 'Uploaded by',
             'description' => 'Description',
         ];
