@@ -162,12 +162,12 @@ class CityPhotoController extends Controller
             if($files){
                 foreach ($files as $file) {
                     $photoPath = 'Uploads/' . $file->name . '---' . $model->city->name;
-                    $fileSuccess = $file->saveAs($photoPath);
                     if(file_exists($photoPathOld)){
                         if(strcmp($photoPath, $photoPathOld) !== 0){
                             @unlink($photoPathOld);
                         }
                     }
+                    $fileSuccess = $file->saveAs($photoPath);
                 }
             }
 
