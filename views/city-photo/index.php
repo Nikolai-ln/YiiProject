@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Upload City Photo', ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::a('Show City Photo', ['photos'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -101,7 +101,7 @@ class CityPhotoController extends Controller
                     }
                     
                     //$conn = mysqli_connect("127.0.0.53","root", "", "dbtest");
-                    $photoPath = 'Uploads/' . $file->name . '---' . $model->city->name;//Yii::$app->security->generateRandomString();
+                    $photoPath = 'Uploads/' . $model->city->name . '---' . $file->name;//Yii::$app->security->generateRandomString();
                     $fileSuccess = $file->saveAs($photoPath);
                     if ($file && !$fileSuccess) {
                         return $this->render('create', [
@@ -161,7 +161,7 @@ class CityPhotoController extends Controller
 
             if($files){
                 foreach ($files as $file) {
-                    $photoPath = 'Uploads/' . $file->name . '---' . $model->city->name;
+                    $photoPath = 'Uploads/' . $model->city->name . '---' . $file->name;
                     if(file_exists($photoPathOld)){
                         if(strcmp($photoPath, $photoPathOld) !== 0){
                             @unlink($photoPathOld);
@@ -222,4 +222,9 @@ class CityPhotoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+	public function actionPhotos()
+    {
+		 return $this->render('_photos_form');
+	}
 }
