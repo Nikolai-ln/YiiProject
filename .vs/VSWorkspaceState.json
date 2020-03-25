@@ -6,8 +6,9 @@
     "\\views",
     "\\views\\city-photo",
     "\\views\\layouts",
-    "\\views\\site"
+    "\\views\\site",
+    "\\web"
   ],
-  "SelectedNode": "\\views\\site\\about.php",
+  "SelectedNode": "\\views\\city-photo\\index.php",
   "PreviewInSolutionExplorer": false
 }
