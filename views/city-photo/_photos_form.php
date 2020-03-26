@@ -58,6 +58,7 @@
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
 		<?php
+		$i = 1;
 		$counter = 0; // number of images that we will show
 		for($index=0; $index < $indexCount; $index++) {
 			$extension = substr($dirArray[$index], -3);
