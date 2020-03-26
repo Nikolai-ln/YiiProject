@@ -14,21 +14,15 @@
   <h2>Photos</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
     <!-- Indicators -->
-    <ol class="carousel-indicators">
+    <!-- <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
+    </ol> -->
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
 
-      <div class="item active">
-       <img src="https://www.hushhush.com/wp-content/uploads/2019/01/2004-ferrari-enzo.jpg" alt="Enzo" style="width:100%;">
-	   <div class="carousel-caption">
-          <h3>Enzo</h3>
-        </div>
-      </div>
 	  <?php
 
 		// open this directory
@@ -47,11 +41,24 @@
 		?>
 
 		<?php
+		$i=1;
+		$string="---";
 		// loop through the array of files and print them all in a list
 		for($index=0; $index < $indexCount; $index++) {
 			$extension = substr($dirArray[$index], -3);
 			if ($extension == 'jpg' || $extension == 'png' || $extension == 'JPG' || $extension == 'PNG'){ // list only jpgs and pngs
-				echo '<div class="item"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" /><div class="carousel-caption"><h3>'.$dirArray[$index].'</h3></div></div>';
+			{
+				if(strpos($dirArray[$index], $string) == true)
+				{
+					if($i==1)
+					{
+						echo '<div class="item active"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" /><div class="carousel-caption"><h3>'.$dirArray[$index].'</h3></div></div>';
+						$i++;
+					}
+					else
+						echo '<div class="item"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" /><div class="carousel-caption"><h3>'.$dirArray[$index].'</h3></div></div>';
+					}
+				}
 			}
 		}
 		?>
