@@ -13,12 +13,6 @@
 <div class="container">
   <h2>Photos</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
-    <!-- Indicators -->
-    <!-- <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol> -->
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
@@ -46,9 +40,9 @@
 		// loop through the array of files and print them all in a list
 		for($index=0; $index < $indexCount; $index++) {
 			$extension = substr($dirArray[$index], -3);
-			if ($extension == 'jpg' || $extension == 'png' || $extension == 'JPG' || $extension == 'PNG'){ // list only jpgs and pngs
+			if ($extension == 'jpg' || $extension == 'png' || $extension == 'JPG' || $extension == 'PNG') // list only jpgs and pngs
 			{
-				if(strpos($dirArray[$index], $string) == true)
+				if(strpos($dirArray[$index], $string) == true) // list images containing $string in their names
 				{
 					if($i==1)
 					{
@@ -57,11 +51,36 @@
 					}
 					else
 						echo '<div class="item"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" /><div class="carousel-caption"><h3>'.$dirArray[$index].'</h3></div></div>';
+				}
+			}
+		}
+		?>
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+		<?php
+		$counter = 0; // number of images that we will show
+		for($index=0; $index < $indexCount; $index++) {
+			$extension = substr($dirArray[$index], -3);
+			if ($extension == 'jpg' || $extension == 'png' || $extension == 'JPG' || $extension == 'PNG') // list only jpgs and pngs
+			{
+				if(strpos($dirArray[$index], $string) == true) // list images containing $string in their names
+				{
+					if($i==1)
+					{
+						echo '<li data-target="#myCarousel" data-slide-to="'.$counter.'" class="active"></li>';
+						$counter++;
+						$i++;
+					}
+					else
+					{
+						echo '<li data-target="#myCarousel" data-slide-to="'.$counter.'"></li>';
+						$counter++;
 					}
 				}
 			}
 		}
 		?>
+		</ol>
 
     </div>
 
