@@ -226,5 +226,10 @@ class CityPhotoController extends Controller
 	public function actionPhotos()
     {
 		 return $this->render('_photos_form');
+    }
+    
+    public function actionGallery()
+    {
+		 return $this->render('gallery');
 	}
 }
