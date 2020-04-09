@@ -95,7 +95,7 @@ img.hover-shadow {
 		$indexCount	= count($dirArray);
 		?>
 		<?php
-        $i = 1;
+        $i = 0;
         $row = 0;
 		$string="---";
 		// loop through the array of files and print them all in a list
@@ -107,19 +107,19 @@ img.hover-shadow {
 				{
           if($row == 0)
           {
-              echo '<tr><td><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" class="hover-shadow cursor"/></td>';
+              echo '<tr><td><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td>';
               $i++;
               $row++;
           }
           else if($row == 1)
           {
-              echo '<td><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" class="hover-shadow cursor"/></td>';
+              echo '<td><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td>';
               $i++;
               $row++;
           }
           else if($row == 2)
           {
-              echo '<td><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" class="hover-shadow cursor"/></td></tr>';
+              echo '<td><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td></tr>';
               $i++;
               $row = 0;
           }
