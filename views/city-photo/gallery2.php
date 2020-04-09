@@ -200,6 +200,7 @@ img.hover-shadow {
 <script>
 function openModal() {
   document.getElementById("myModal").style.display = "block";
+  //setTimeout(function(){document.getElementById("myModal").style.display = "block";}, 650); // to hide the slide between the photos
 }
 
 function closeModal() {
