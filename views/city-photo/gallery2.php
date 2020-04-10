@@ -107,19 +107,19 @@ img.hover-shadow {
 				{
           if($row == 0)
           {
-              echo '<tr><td><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td>';
+              echo '<tr><td style="max-width:350px; max-height: 170px"><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" style="width: 100%; height: 100%;" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td>';
               $i++;
               $row++;
           }
           else if($row == 1)
           {
-              echo '<td><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td>';
+              echo '<td style="max-width:350px; max-height: 170px"><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" style="width: 100%; height: 100%;" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td>';
               $i++;
               $row++;
           }
           else if($row == 2)
           {
-              echo '<td><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" width="350px" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td></tr>';
+              echo '<td style="max-width:350px; max-height: 170px"><div class="hover-shadow cursor"><img src="../Uploads/' . $dirArray[$index] . '" alt="Image" style="width: 100%; height: 100%;" onclick="openModal();" data-target="#myCarousel" data-slide-to="'.$i.'" class="active"/></div></td></tr>';
               $i++;
               $row = 0;
           }
@@ -199,8 +199,8 @@ img.hover-shadow {
 
 <script>
 function openModal() {
-  document.getElementById("myModal").style.display = "block";
-  //setTimeout(function(){document.getElementById("myModal").style.display = "block";}, 650); // to hide the slide between the photos
+  //document.getElementById("myModal").style.display = "block";
+  setTimeout(function(){document.getElementById("myModal").style.display = "block";}, 650); // to hide the slide between the photos
 }
 
 function closeModal() {
