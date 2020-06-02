@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
+use yii\data\ActiveDataProvider;
 
 /**
  * CityController implements the CRUD actions for City model.
@@ -56,17 +57,36 @@ class CityController extends Controller
         //     'dataProvider' => $dataProvider,
         // ]);
 
+        $request = Yii::$app->request;
         $query = City::find();
-        $countQuery = clone $query;
-        $pagination = new Pagination(['defaultPageSize' => 2, 'totalCount' => $countQuery->count()]);
-        $cities = $query->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
+        $searchModel = new City();
+        $hasSearchParams = $searchModel->load($request->get());
+
+        if ($hasSearchParams) {
+            $query->andFilterWhere(['like', 'name', $searchModel->name]);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => array('pageSize' => 5),
+        ]);
 
         return $this->render('index', [
-            'cities' => $cities,
-            'pagination' => $pagination,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
+
+        // $query = City::find();
+        // $countQuery = clone $query;
+        // $pagination = new Pagination(['defaultPageSize' => 2, 'totalCount' => $countQuery->count()]);
+        // $cities = $query->offset($pagination->offset)
+        //     ->limit($pagination->limit)
+        //     ->all();
+
+        // return $this->render('index', [
+        //     'cities' => $cities,
+        //     'pagination' => $pagination,
+        // ]);
     }
 
     /**

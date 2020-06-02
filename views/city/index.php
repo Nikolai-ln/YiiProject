@@ -12,11 +12,32 @@ $this->title = 'Cities';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<ul>
-<?php foreach ($cities as $city): ?>
-    <li>
-        <?= Html::encode("{$city->name}"); ?>
-    </li>
-<?php endforeach; ?>
-</ul>
-<?php echo LinkPager::widget(['pagination' => $pagination]); ?>
+<div class="city-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <?php if(!Yii::$app->user->isGuest): ?>
+    <p>
+        <?= Html::a('Create City', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?php endif; ?>
+
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            //'city_id',
+            'name',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+    <?php LinkPager::widget([
+            'pagination'=>$dataProvider->pagination,
+        ]); ?>
+
+</div>
