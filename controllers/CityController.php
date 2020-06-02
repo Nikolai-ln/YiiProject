@@ -9,6 +9,7 @@ use app\models\CitySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
 /**
  * CityController implements the CRUD actions for City model.
@@ -47,12 +48,24 @@ class CityController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CitySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        // $searchModel = new CitySearch();
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
+
+        $query = City::find();
+        $countQuery = clone $query;
+        $pagination = new Pagination(['defaultPageSize' => 2, 'totalCount' => $countQuery->count()]);
+        $cities = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'cities' => $cities,
+            'pagination' => $pagination,
         ]);
     }
 
